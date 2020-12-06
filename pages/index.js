@@ -109,75 +109,73 @@ function Index(props) {
         <Fragment>
             <Container className={classes.container}>
                 <Grid container spacing={3}>
-                    {notes.totalCount !== 0
-                        ? notes.notes.map((note) => {
-                              console.log(note._id);
-                              return (
-                                  <Grid
-                                      key={note._id}
-                                      item
-                                      sm={12}
-                                      md
-                                      container
-                                  >
-                                      <Card className={classes.card}>
-                                          <Grid
-                                              item
-                                              sm={12}
-                                              container
-                                              direction="column"
-                                              spacing={2}
-                                          >
-                                              <Grid item>
-                                                  <Typography
-                                                      className={classes.title}
-                                                      variant="h6"
-                                                  >
-                                                      {note.title}
-                                                  </Typography>
-                                              </Grid>
-                                              <Grid item container>
-                                                  <Button
-                                                      component={Link}
-                                                      href={`/note/${note._id}`}
-                                                      variant="contained"
-                                                      color="default"
-                                                  >
-                                                      View
-                                                  </Button>
-                                                  <Button
-                                                      component={Link}
-                                                      href={`/note/${note._id}/edit`}
-                                                      variant="contained"
-                                                      color="primary"
-                                                      className={classes.btn}
-                                                  >
-                                                      Edit
-                                                  </Button>
+                    {notes.totalCount !== 0 ? (
+                        notes.notes.map((note) => {
+                            console.log(note._id);
+                            return (
+                                <Grid key={note._id} item sm={12} md container>
+                                    <Card className={classes.card}>
+                                        <Grid
+                                            item
+                                            sm={12}
+                                            container
+                                            direction="column"
+                                            spacing={2}
+                                        >
+                                            <Grid item>
+                                                <Typography
+                                                    className={classes.title}
+                                                    variant="h6"
+                                                >
+                                                    {note.title}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item container>
+                                                <Button
+                                                    component={Link}
+                                                    href={`/note/${note._id}`}
+                                                    variant="contained"
+                                                    color="default"
+                                                >
+                                                    View
+                                                </Button>
+                                                <Button
+                                                    component={Link}
+                                                    href={`/note/${note._id}/edit`}
+                                                    variant="contained"
+                                                    color="primary"
+                                                    className={classes.btn}
+                                                >
+                                                    Edit
+                                                </Button>
 
-                                                  <ButtonBase
-                                                      className={
-                                                          classes.deleteButton
-                                                      }
-                                                      onClick={() =>
-                                                          handleNoteDelete(
-                                                              note._id
-                                                          )
-                                                      }
-                                                  >
-                                                      <DeleteIcon
-                                                          className={
-                                                              classes.deleteIcon
-                                                          }
-                                                      />
-                                                  </ButtonBase>
-                                              </Grid>
-                                          </Grid>
-                                      </Card>
-                                  </Grid>
-                              );
-                          })
-                        : null}
+                                                <ButtonBase
+                                                    className={
+                                                        classes.deleteButton
+                                                    }
+                                                    onClick={() =>
+                                                        handleNoteDelete(
+                                                            note._id
+                                                        )
+                                                    }
+                                                >
+                                                    <DeleteIcon
+                                                        className={
+                                                            classes.deleteIcon
+                                                        }
+                                                    />
+                                                </ButtonBase>
+                                            </Grid>
+                                        </Grid>
+                                    </Card>
+                                </Grid>
+                            );
+                        })
+                    ) : (
+                        <Typography variant="h6">
+                            No created notes yet !!!
+                        </Typography>
+                    )}
                 </Grid>
                 <ButtonBase
                     className={classes.addIcon}

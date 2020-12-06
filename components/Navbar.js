@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 // React related
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,9 +17,19 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MUILink from '@material-ui/core/Link';
+import {
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    DialogContent,
+    Button,
+    CircularProgress,
+} from '@material-ui/core';
 // Redux related
 import { connect } from 'react-redux';
 import { logout } from '../actions';
+import ChangePassword from './ChangePassword';
+import { changePassword } from '../apis/user';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -82,6 +92,28 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
+    dialogProgress: {
+        '& .MuiDialog-paperWidthSm': {
+            width: '3rem',
+            height: '3rem',
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+        },
+    },
+    dialogMsg: {
+        '& .MuiDialog-paperWidthSm': {
+            padding: '2rem',
+            width: '50%',
+        },
+    },
+    dialog: {
+        '& .MuiDialog-paperWidthSm': {
+            width: '50%',
+        },
+    },
+    errorMsg: {
+        color: '#3F51B5',
+    },
 }));
 
 function Navbar(props) {
@@ -90,8 +122,14 @@ function Navbar(props) {
     const { loading, isLoggedIn, logout } = props;
     const router = useRouter();
 
+    const [showError, setshowError] = useState(false);
+    const [submitting, setsubmitting] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [openDialog, setopenDialog] = useState(false);
+    const [formValue, setformValue] = useState(null);
+
+    const [errorMessage, seterrorMessage] = useState('');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -113,6 +151,42 @@ function Navbar(props) {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const openChangeDialog = () => {
+        handleMenuClose();
+        handleMobileMenuClose();
+        setopenDialog(true);
+    };
+
+    const handleSetFormValues = (values) => {
+        setformValue(values);
+        console.log(values);
+    };
+    const handleChangePassword = async () => {
+        if (formValue.oldPassword !== formValue.newPassword) {
+            console.log(formValue);
+            setsubmitting(true);
+            const data = await changePassword(formValue);
+            if (data.success) {
+                seterrorMessage('SuccessFully Changed');
+                setshowError(true);
+                setTimeout(() => {
+                    setshowError(false);
+                    setsubmitting(false);
+                    setopenDialog(false);
+                }, 2000);
+            } else {
+                const message = data.data;
+                seterrorMessage(message);
+                setshowError(true);
+                console.log(data);
+                setTimeout(() => {
+                    setshowError(false);
+                    setsubmitting(false);
+                }, 2000);
+            }
+        }
+    };
+
     const handleLogout = () => {
         logout();
         handleMenuClose();
@@ -131,7 +205,7 @@ function Navbar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={openChangeDialog}>Change password</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
@@ -147,7 +221,7 @@ function Navbar(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleMobileMenuClose}>
+            <MenuItem onClick={openChangeDialog}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -156,7 +230,7 @@ function Navbar(props) {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <p>Change password</p>
             </MenuItem>
             <MenuItem onClick={handleLogout}>
                 <IconButton
@@ -221,6 +295,44 @@ function Navbar(props) {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
+            <Dialog
+                className={classes.dialog}
+                open={openDialog}
+                onClose={() => setopenDialog(false)}
+            >
+                <DialogTitle>Change password</DialogTitle>
+                <DialogContent dividers>
+                    <ChangePassword handleSetFormValues={handleSetFormValues} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleChangePassword} color="primary">
+                        Change
+                    </Button>
+                    <Button
+                        onClick={() => setopenDialog(false)}
+                        color="secondary"
+                        autoFocus
+                    >
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                className={classes.dialogProgress}
+                open={submitting}
+                aria-labelledby="simple-dialog-title"
+            >
+                <CircularProgress />
+            </Dialog>
+            <Dialog
+                className={classes.dialogMsg}
+                open={showError}
+                aria-labelledby="simple-dialog-title"
+            >
+                <Typography className={classes.errorMsg} variant="body2">
+                    {errorMessage}
+                </Typography>
+            </Dialog>
         </div>
     );
 }

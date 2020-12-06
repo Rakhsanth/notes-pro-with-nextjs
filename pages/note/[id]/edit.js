@@ -92,7 +92,7 @@ function Edit(props) {
             .max(3000, 'Title must have atmost 3000 characters'),
     });
     const onSubmit = async (values, onSubmitProps) => {
-        console.log(values);
+        // console.log(values);
         setsubmitting(true);
         await updateNote(values, note._id);
         router.replace('/');
@@ -116,7 +116,7 @@ function Edit(props) {
                         onSubmit={onSubmit}
                     >
                         {(formik) => {
-                            console.log(formik);
+                            // console.log(formik);
                             return (
                                 <Form>
                                     <Grid
@@ -250,9 +250,9 @@ function Edit(props) {
 
 // This gets called on every request
 export async function getServerSideProps(context) {
-    console.log(context);
+    // console.log(context);
     // Fetch data from external API
-    console.log(context.req.headers.cookie);
+    // console.log(context.req.headers.cookie);
 
     let note;
     try {
@@ -290,7 +290,7 @@ export async function getServerSideProps(context) {
         note = response.data.data;
         // Pass data to the page via props
     } catch (err) {
-        console.log(err.response);
+        // console.log(err.response);
     }
     return { props: { note } };
 }

@@ -40,7 +40,7 @@ function Index(props) {
     const classes = useStyles();
 
     const { note } = props;
-    console.log(note);
+    // console.log(note);
 
     return (
         <Container className={classes.container}>
@@ -69,7 +69,7 @@ function Index(props) {
 // This gets called on every request
 export async function getServerSideProps(context) {
     // Fetch data from external API
-    console.log(context.req.headers.cookie);
+    // console.log(context.req.headers.cookie);
     const noteId = context.query.id;
 
     const getURL = `${apiBaseURL}/notes/${noteId}`;
@@ -88,7 +88,7 @@ export async function getServerSideProps(context) {
         note = response.data.data;
         // Pass data to the page via props
     } catch (err) {
-        console.log(err.response);
+        // console.log(err.response);
     }
     return { props: { note } };
 }

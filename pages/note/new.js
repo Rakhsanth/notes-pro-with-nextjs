@@ -92,7 +92,7 @@ function New(props) {
             .max(3000, 'Title must have atmost 3000 characters'),
     });
     const onSubmit = async (values, onSubmitProps) => {
-        console.log(values);
+        // console.log(values);
         setsubmitting(true);
         createNote(values);
         router.replace('/');
@@ -108,7 +108,7 @@ function New(props) {
                     onSubmit={onSubmit}
                 >
                     {(formik) => {
-                        console.log(formik);
+                        // console.log(formik);
                         return (
                             <Form>
                                 <Grid
@@ -262,7 +262,7 @@ export async function getStaticProps(context) {
         data = response.data.data;
         // Pass data to the page via props
     } catch (err) {
-        console.log(err.response);
+        // console.log(err.response);
     }
     return { props: { loggedIn: true } };
 }

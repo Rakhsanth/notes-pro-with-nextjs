@@ -159,11 +159,11 @@ function Navbar(props) {
 
     const handleSetFormValues = (values) => {
         setformValue(values);
-        console.log(values);
+        // console.log(values);
     };
     const handleChangePassword = async () => {
         if (formValue.oldPassword !== formValue.newPassword) {
-            console.log(formValue);
+            // console.log(formValue);
             setsubmitting(true);
             const data = await changePassword(formValue);
             if (data.success) {
@@ -178,7 +178,7 @@ function Navbar(props) {
                 const message = data.data;
                 seterrorMessage(message);
                 setshowError(true);
-                console.log(data);
+                // console.log(data);
                 setTimeout(() => {
                     setshowError(false);
                     setsubmitting(false);

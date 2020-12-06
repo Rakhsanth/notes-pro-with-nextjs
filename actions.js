@@ -34,7 +34,7 @@ export const registerUser = (body) => {
             dispatch({ type: REGISTER_USER, payload: response.data });
             dispatch(loadUser);
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: AUTH_ERROR, payload: err.response });
         }
     };
@@ -51,7 +51,7 @@ export const loginUser = (body) => {
             dispatch({ type: LOGIN_USER, payload: response.data });
             dispatch(loadUser);
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: AUTH_ERROR, payload: err.response });
         }
     };
@@ -81,7 +81,7 @@ export const loadUser = () => {
             );
             dispatch({ type: LOAD_USER, payload: response.data.data });
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: AUTH_ERROR, payload: err.response });
         }
     };
@@ -107,7 +107,7 @@ export const getNotes = (pageNum, limit) => {
             );
             dispatch({ type: GET_NOTES, payload: response.data });
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: NOTES_ERROR, payload: err.response });
         }
     };
@@ -124,7 +124,7 @@ export const createNote = (note) => {
             );
             dispatch({ type: CREATE_NOTE, payload: response.data.data });
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: NOTES_ERROR, payload: err.response });
         }
     };
@@ -141,7 +141,7 @@ export const deleteNote = (noteId) => {
             );
             dispatch({ type: DELETE_NOTE, payload: noteId });
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
             dispatch({ type: NOTES_ERROR, payload: err.response });
         }
     };

@@ -111,7 +111,7 @@ function Index(props) {
                 <Grid container spacing={3}>
                     {notes.totalCount !== 0 ? (
                         notes.notes.map((note) => {
-                            console.log(note._id);
+                            // console.log(note._id);
                             return (
                                 <Grid key={note._id} item sm={12} md container>
                                     <Card className={classes.card}>

@@ -44,24 +44,24 @@ function Index(props) {
 
     return (
         <Container className={classes.container}>
-            {/* {note ?  */}
-            {/* ( */}
-            <Card className={classes.card}>
-                <CardHeader
-                    title={
-                        <Typography className={classes.title} variant="h6">
-                            {note.title}
+            {note ? (
+                <Card className={classes.card}>
+                    <CardHeader
+                        title={
+                            <Typography className={classes.title} variant="h6">
+                                {note.title}
+                            </Typography>
+                        }
+                    />
+                    <CardContent>
+                        <Typography variant="body1">
+                            {note.description}
                         </Typography>
-                    }
-                />
-                <CardContent>
-                    <Typography variant="body1">{note.description}</Typography>
-                </CardContent>
-            </Card>
-            {/* )
-            //  : (
-            //     <CircularProgress />
-            // )} */}
+                    </CardContent>
+                </Card>
+            ) : (
+                <CircularProgress />
+            )}
         </Container>
     );
 }
@@ -88,10 +88,10 @@ export async function getServerSideProps(context) {
         console.log(response.data);
         note = response.data.data;
         // Pass data to the page via props
+        return { props: { note } };
     } catch (err) {
         console.log(err.response);
     }
-    return { props: { note } };
 }
 
 export default Index;

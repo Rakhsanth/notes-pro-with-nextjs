@@ -290,12 +290,12 @@ export async function getServerSideProps(context) {
             });
             console.log(response.data);
             note = response.data.data;
+            // Pass data to the page via props
+            return { props: { note } };
         }
-        // Pass data to the page via props
     } catch (err) {
-        // console.log(err.response);
+        console.log(err.response);
     }
-    return { props: { note } };
 }
 
 const mapStateToProps = (store) => ({

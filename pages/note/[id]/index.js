@@ -70,7 +70,8 @@ function Index(props) {
 export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
-    const noteId = context.query.id;
+    console.log(context);
+    const noteId = context.params.id;
     let note;
     try {
         const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {

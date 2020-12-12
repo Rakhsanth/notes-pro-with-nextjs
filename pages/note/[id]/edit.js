@@ -259,7 +259,7 @@ export async function getServerSideProps(context) {
     // console.log(context.req.headers.cookie);
 
     let note;
-    const noteId = context.query.id;
+    const noteId = context.params.id;
     try {
         const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
             headers: {

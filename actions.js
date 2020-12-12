@@ -2,6 +2,7 @@ import axios from 'axios';
 import { apiBaseURL } from './config/config';
 import {
     LOGIN_USER,
+    RESET_LOADING,
     REGISTER_USER,
     LOGOUT_USER,
     LOAD_USER,
@@ -22,6 +23,13 @@ const getAxiosConfig = (contentType, withCredentials) => {
     return axiosConfig;
 };
 
+// Simple action creator for resetting loading state for re-renderings
+export const resetLoading = (state) => {
+    return {
+        type: RESET_LOADING,
+        payload: state,
+    };
+};
 // Register action
 export const registerUser = (body) => {
     return async function (dispatch) {

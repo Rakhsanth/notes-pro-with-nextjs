@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
     LOGIN_USER,
+    RESET_LOADING,
     REGISTER_USER,
     LOGOUT_USER,
     LOAD_USER,
@@ -23,6 +24,10 @@ const initialAuth = {
 const authReducer = (state = initialAuth, action) => {
     const { type, payload } = action;
     switch (type) {
+        case RESET_LOADING:
+            if (payload === 'auth') {
+                return { ...state, loading: true };
+            }
         case LOAD_USER:
             console.log(action);
             return {
@@ -88,6 +93,10 @@ const initialNotes = {
 const notesReducer = (state = initialNotes, action) => {
     const { type, payload } = action;
     switch (type) {
+        case RESET_LOADING:
+            if (payload === 'auth') {
+                return { ...state, loading: true };
+            }
         case GET_NOTES:
             return {
                 ...state,

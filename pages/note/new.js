@@ -256,6 +256,12 @@ export async function getStaticProps(context) {
         // Pass data to the page via props
     } catch (err) {
         // console.log(err.response);
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        };
     }
     return { props: { loggedIn: true } };
 }

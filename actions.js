@@ -30,6 +30,21 @@ export const resetLoading = (state) => {
         payload: state,
     };
 };
+// Load current user data
+export const loadUser = () => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get(
+                `${apiBaseURL}/users/auth/me`,
+                getAxiosConfig('application/json', true)
+            );
+            dispatch({ type: LOAD_USER, payload: response.data.data });
+        } catch (err) {
+            // console.log(err.response);
+            dispatch({ type: AUTH_ERROR, payload: err.response });
+        }
+    };
+};
 // Register action
 export const registerUser = (body) => {
     return async function (dispatch) {
@@ -40,7 +55,7 @@ export const registerUser = (body) => {
                 getAxiosConfig('application/json', true)
             );
             dispatch({ type: REGISTER_USER, payload: response.data });
-            dispatch(loadUser);
+            dispatch(loadUser());
         } catch (err) {
             // console.log(err.response);
             dispatch({ type: AUTH_ERROR, payload: err.response });
@@ -57,7 +72,7 @@ export const loginUser = (body) => {
                 getAxiosConfig('application/json', true)
             );
             dispatch({ type: LOGIN_USER, payload: response.data });
-            dispatch(loadUser);
+            dispatch(loadUser());
         } catch (err) {
             // console.log(err.response);
             dispatch({ type: AUTH_ERROR, payload: err.response });
@@ -76,21 +91,6 @@ export const logout = () => {
             dispatch({ type: LOGOUT_USER, payload: response.data });
         } catch (err) {
             dispatch({ type: AUTH_ERROR, payload: err.response.data });
-        }
-    };
-};
-// Load current user data
-export const loadUser = () => {
-    return async function (dispatch) {
-        try {
-            const response = await axios.get(
-                `${apiBaseURL}/users/auth/me`,
-                getAxiosConfig('application/json', true)
-            );
-            dispatch({ type: LOAD_USER, payload: response.data.data });
-        } catch (err) {
-            // console.log(err.response);
-            dispatch({ type: AUTH_ERROR, payload: err.response });
         }
     };
 };

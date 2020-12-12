@@ -27,6 +27,8 @@ const authReducer = (state = initialAuth, action) => {
         case RESET_LOADING:
             if (payload === 'auth') {
                 return { ...state, loading: true };
+            } else {
+                return state;
             }
         case LOAD_USER:
             console.log(action);
@@ -97,6 +99,8 @@ const notesReducer = (state = initialNotes, action) => {
         case RESET_LOADING:
             if (payload === 'notes') {
                 return { ...state, loading: true };
+            } else {
+                return state;
             }
         case GET_NOTES:
             return {

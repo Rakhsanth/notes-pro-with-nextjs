@@ -23,6 +23,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 // redux and actions related
 import { connect } from 'react-redux';
+import { resetLoading } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function New(props) {
     const classes = useStyles();
 
-    const { loading, loggedIn } = props;
+    const { loading, loggedIn, resetLoading } = props;
 
     const router = useRouter();
 
@@ -95,6 +96,7 @@ function New(props) {
         // console.log(values);
         setsubmitting(true);
         createNote(values);
+        resetLoading('notes');
         router.replace('/');
         setsubmitting(false);
     };
@@ -245,7 +247,7 @@ export async function getStaticProps(context) {
         response = await axios.get(getURL, {
             headers: {
                 'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : null,
+                // cookie: context.req ? context.req.headers.cookie : null,
             },
             withCredentials: true,
         });
@@ -258,4 +260,4 @@ export async function getStaticProps(context) {
     return { props: { loggedIn: true } };
 }
 
-export default connect(mapStateToProps)(New);
+export default connect(mapStateToProps, { resetLoading })(New);

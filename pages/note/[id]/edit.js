@@ -290,7 +290,7 @@ export async function getServerSideProps(context) {
             },
             withCredentials: true,
         });
-
+        console.log(response.data);
         note = response.data.data;
         // Pass data to the page via props
     } catch (err) {

@@ -83,8 +83,8 @@ function Edit(props) {
     // }, [loading, loggedIn]);
 
     const initialValues = {
-        title: note.title || '',
-        description: note.description || '',
+        title: note ? note.title : '',
+        description: note ? note.description : '',
     };
     const validationSchema = Yup.object({
         title: Yup.string()

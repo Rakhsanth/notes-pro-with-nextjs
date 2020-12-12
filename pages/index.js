@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 function Index(props) {
     const classes = useStyles();
 
-    const { loading, isLoggedIn, user, getNotes, notes } = props;
+    const { loading, isLoggedIn, user, userId, getNotes, notes } = props;
 
     const router = useRouter();
 
@@ -92,10 +92,10 @@ function Index(props) {
         }
     }, [loading, isLoggedIn]);
     useEffect(() => {
-        if (user) {
+        if (user.id !== undefined) {
             getNotes(null, 'all');
         }
-    }, []);
+    }, [loading, isLoggedIn, userId]);
 
     const handleNoteDelete = async (noteId) => {
         await deleteNote(noteId);
@@ -195,6 +195,7 @@ const mapStateToProps = (store) => ({
     loading: store.auth.loading,
     isLoggedIn: store.auth.loggedIn,
     user: store.auth.user,
+    userId: store.auth.user._id,
     loadingNotes: store.notes.loading,
     notes: store.notes,
 });

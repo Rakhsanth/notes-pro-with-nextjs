@@ -260,7 +260,6 @@ export async function getServerSideProps(context) {
 
     let note;
     const noteId = context.query.id;
-    let response;
     try {
         const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
             headers: {
@@ -279,7 +278,7 @@ export async function getServerSideProps(context) {
                 },
             };
         } else {
-            response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
+            const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     cookie: context.req ? context.req.headers.cookie : null,
@@ -288,12 +287,12 @@ export async function getServerSideProps(context) {
             });
             console.log(response.data);
             note = response.data.data;
-            // Pass data to the page via props
-            return { props: { note } };
         }
     } catch (err) {
         console.log(err.response);
     }
+    // Pass data to the page via props
+    return { props: { note } };
 }
 
 const mapStateToProps = (store) => ({

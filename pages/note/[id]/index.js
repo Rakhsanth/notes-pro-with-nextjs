@@ -71,6 +71,7 @@ export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
     const noteId = context.query.id;
+    let note;
     try {
         const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
             headers: {
@@ -81,12 +82,12 @@ export async function getServerSideProps(context) {
         });
 
         console.log(response.data);
-        const note = response.data.data;
-        // Pass data to the page via props
-        return { props: { note } };
+        note = response.data.data;
     } catch (err) {
         console.log(err.response);
     }
+    // Pass data to the page via props
+    return { props: { note } };
 }
 
 export default Index;

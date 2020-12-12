@@ -279,9 +279,7 @@ export async function getServerSideProps(context) {
                 },
             };
         } else {
-            const getURL = `${apiBaseURL}/notes/${noteId}`;
-
-            response = await axios.get(getURL, {
+            response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     cookie: context.req ? context.req.headers.cookie : null,

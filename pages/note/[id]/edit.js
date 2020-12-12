@@ -263,7 +263,7 @@ export async function getServerSideProps(context) {
         const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
             headers: {
                 'Content-Type': 'application/json',
-                // cookie: context.req ? context.req.headers.cookie : null,
+                cookie: context.req ? context.req.headers.cookie : null,
             },
             withCredentials: true,
         });

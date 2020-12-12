@@ -247,7 +247,7 @@ export async function getStaticProps(context) {
         response = await axios.get(getURL, {
             headers: {
                 'Content-Type': 'application/json',
-                // cookie: context.req ? context.req.headers.cookie : null,
+                cookie: context.req ? context.req.headers.cookie : null,
             },
             withCredentials: true,
         });

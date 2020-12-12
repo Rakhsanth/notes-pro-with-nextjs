@@ -259,6 +259,8 @@ export async function getServerSideProps(context) {
     // console.log(context.req.headers.cookie);
 
     let note;
+    const noteId = context.query.id;
+    let response;
     try {
         const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
             headers: {
@@ -276,22 +278,19 @@ export async function getServerSideProps(context) {
                     permanent: false,
                 },
             };
+        } else {
+            const getURL = `${apiBaseURL}/notes/${noteId}`;
+
+            response = await axios.get(getURL, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    cookie: context.req ? context.req.headers.cookie : null,
+                },
+                withCredentials: true,
+            });
+            console.log(response.data);
+            note = response.data.data;
         }
-
-        const noteId = context.query.id;
-
-        const getURL = `${apiBaseURL}/notes/${noteId}`;
-
-        let response;
-        response = await axios.get(getURL, {
-            headers: {
-                'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : null,
-            },
-            withCredentials: true,
-        });
-        console.log(response.data);
-        note = response.data.data;
         // Pass data to the page via props
     } catch (err) {
         // console.log(err.response);

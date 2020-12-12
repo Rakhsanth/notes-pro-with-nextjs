@@ -44,24 +44,24 @@ function Index(props) {
 
     return (
         <Container className={classes.container}>
-            {note ? (
-                <Card className={classes.card}>
-                    <CardHeader
-                        title={
-                            <Typography className={classes.title} variant="h6">
-                                {note.title}
-                            </Typography>
-                        }
-                    />
-                    <CardContent>
-                        <Typography variant="body1">
-                            {note.description}
+            {/* {note ?  */}
+            {/* ( */}
+            <Card className={classes.card}>
+                <CardHeader
+                    title={
+                        <Typography className={classes.title} variant="h6">
+                            {note.title}
                         </Typography>
-                    </CardContent>
-                </Card>
-            ) : (
-                <CircularProgress />
-            )}
+                    }
+                />
+                <CardContent>
+                    <Typography variant="body1">{note.description}</Typography>
+                </CardContent>
+            </Card>
+            {/* )
+            //  : (
+            //     <CircularProgress />
+            // )} */}
         </Container>
     );
 }

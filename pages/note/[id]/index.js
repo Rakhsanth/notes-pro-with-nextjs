@@ -40,7 +40,7 @@ function Index(props) {
     const classes = useStyles();
 
     const { note } = props;
-    // console.log(note);
+    console.log(note);
 
     return (
         <Container className={classes.container}>

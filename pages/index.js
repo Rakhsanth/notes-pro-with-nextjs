@@ -95,7 +95,7 @@ function Index(props) {
         if (user.id !== undefined) {
             getNotes(null, 'all');
         }
-    }, [loading, isLoggedIn, userId]);
+    }, []);
 
     const handleNoteDelete = async (noteId) => {
         await deleteNote(noteId);

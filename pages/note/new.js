@@ -199,15 +199,6 @@ function New(props) {
                                                 );
                                             }}
                                         </Field>
-                                        <Typography
-                                            variant="subtitle2"
-                                            component="subtitle2"
-                                        >
-                                            {formik.touched.description &&
-                                            Boolean(formik.errors.description)
-                                                ? formik.errors.description
-                                                : null}
-                                        </Typography>
                                     </Grid>
                                     <Grid item className={classes.gridItem}>
                                         <Button

@@ -82,7 +82,15 @@ const useStyles = makeStyles((theme) => ({
 function Index(props) {
     const classes = useStyles();
 
-    const { loading, isLoggedIn, user, userId, getNotes, notes } = props;
+    const {
+        loading,
+        loadingNotes,
+        isLoggedIn,
+        user,
+        userId,
+        getNotes,
+        notes,
+    } = props;
 
     const router = useRouter();
 
@@ -92,10 +100,10 @@ function Index(props) {
         }
     }, [loading, isLoggedIn]);
     useEffect(() => {
-        if (user.id !== undefined) {
+        if (userId !== undefined) {
             getNotes(null, 'all');
         }
-    }, []);
+    }, [loadingNotes, userId]);
 
     const handleNoteDelete = async (noteId) => {
         await deleteNote(noteId);

@@ -21,6 +21,9 @@ import {
 //Form and formik, Yup related
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+// redux related
+import { connect } from 'react-redux';
+import { resetLoading } from '../../../actions';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function Edit(props) {
     const classes = useStyles();
 
-    const { note, loading, loggedIn } = props;
+    const { note, loading, loggedIn, resetLoading } = props;
 
     const router = useRouter();
 
@@ -95,6 +98,7 @@ function Edit(props) {
         // console.log(values);
         setsubmitting(true);
         await updateNote(values, note._id);
+        resetLoading('notes');
         router.replace('/');
         setsubmitting(false);
     };
@@ -300,4 +304,4 @@ const mapStateToProps = (store) => ({
     loggedIn: store.auth.loggedIn,
 });
 
-export default Edit;
+export default connect(mapStateToProps, { resetLoading })(Edit);

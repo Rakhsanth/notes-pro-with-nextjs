@@ -63,6 +63,7 @@ const authReducer = (state = initialAuth, action) => {
                 loading: false,
                 loggedIn: false,
                 token: null,
+                user: {},
                 other: payload,
                 error: false,
             };
@@ -94,7 +95,7 @@ const notesReducer = (state = initialNotes, action) => {
     const { type, payload } = action;
     switch (type) {
         case RESET_LOADING:
-            if (payload === 'auth') {
+            if (payload === 'notes') {
                 return { ...state, loading: true };
             }
         case GET_NOTES:

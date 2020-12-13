@@ -70,13 +70,14 @@ export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
     console.log(context.req.headers);
+    console.log(context.req.headers.cookie);
     const noteId = context.params.id;
     let note;
     try {
         const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
             headers: {
                 'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : null,
+                cookie: context.req ? context.req.headers.cookie : undefined,
             },
             withCredentials: true,
         });

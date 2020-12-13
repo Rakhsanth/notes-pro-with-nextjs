@@ -264,7 +264,7 @@ export async function getServerSideProps(context) {
         const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
             headers: {
                 'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : null,
+                cookie: context.req ? context.req.headers.cookie : undefined,
             },
             withCredentials: true,
         });
@@ -281,7 +281,9 @@ export async function getServerSideProps(context) {
             const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    cookie: context.req ? context.req.headers.cookie : null,
+                    cookie: context.req
+                        ? context.req.headers.cookie
+                        : undefined,
                 },
                 withCredentials: true,
             });

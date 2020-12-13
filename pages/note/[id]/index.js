@@ -87,7 +87,7 @@ export async function getServerSideProps(context) {
         console.log(err);
         return {
             props: {
-                note: { title: 'some', description: 'some desc' },,
+                note: { title: 'some', description: 'some desc' },
             },
         };
     }

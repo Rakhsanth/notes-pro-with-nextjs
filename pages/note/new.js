@@ -68,7 +68,9 @@ const useStyles = makeStyles((theme) => ({
 function New(props) {
     const classes = useStyles();
 
-    const { loading, loggedIn, resetLoading } = props;
+    const { loading, loggedIn, resetLoading, response } = props;
+
+    console.log(loggedIn, response);
 
     const router = useRouter();
 
@@ -256,9 +258,9 @@ export async function getStaticProps(context) {
         // Pass data to the page via props
     } catch (err) {
         console.log(err.response);
-        return { props: { loggedIn: false } };
+        return { props: { loggedIn: false, response: err.response } };
     }
-    return { props: { loggedIn: true } };
+    return { props: { loggedIn: true, response } };
 }
 
 export default connect(mapStateToProps, { resetLoading })(New);

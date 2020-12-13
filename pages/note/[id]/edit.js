@@ -292,7 +292,7 @@ export async function getServerSideProps(context) {
         console.log(err.response);
     }
     // Pass data to the page via props
-    return { props: { note } };
+    return { props: { note: note } };
 }
 
 const mapStateToProps = (store) => ({

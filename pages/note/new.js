@@ -236,7 +236,7 @@ const mapStateToProps = (store) => ({
 });
 
 // This gets called on every request
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
     // const noteId = context.query.id;
@@ -262,7 +262,7 @@ export async function getStaticProps(context) {
             props: { loggedIn: false },
         };
     }
-    return { props: { loggedIn: true } };
+    return { props: { loggedIn: data ? true : false } };
 }
 
 export default connect(mapStateToProps, { resetLoading })(New);

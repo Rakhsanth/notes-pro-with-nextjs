@@ -233,36 +233,37 @@ function New(props) {
 
 const mapStateToProps = (store) => ({
     loading: store.auth.loading,
+    loggedIn: store.auth.loggedIn,
 });
 
 // This gets called on every request
-export async function getServerSideProps(context) {
-    // Fetch data from external API
-    // console.log(context.req.headers.cookie);
-    // const noteId = context.query.id;
+// export async function getServerSideProps(context) {
+// Fetch data from external API
+// console.log(context.req.headers.cookie);
+// const noteId = context.query.id;
 
-    const getURL = `${apiBaseURL}/users/auth/me`;
+// const getURL = `${apiBaseURL}/users/auth/me`;
 
-    let response;
-    let data;
-    try {
-        response = await axios.get(getURL, {
-            headers: {
-                'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : undefined,
-            },
-            withCredentials: true,
-        });
+// let response;
+// let data;
+// try {
+//     response = await axios.get(getURL, {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             cookie: context.req ? context.req.headers.cookie : undefined,
+//         },
+//         withCredentials: true,
+//     });
 
-        data = response.data.data;
-        // Pass data to the page via props
-    } catch (err) {
-        console.log(err.response);
-        return {
-            props: { loggedIn: false },
-        };
-    }
-    return { props: { loggedIn: data ? true : false } };
-}
+//     data = response.data.data;
+//     // Pass data to the page via props
+// } catch (err) {
+//     console.log(err.response);
+//     return {
+//         props: { loggedIn: false },
+//     };
+// }
+// return { props: { loggedIn: data ? true : false } };
+// }
 
 export default connect(mapStateToProps, { resetLoading })(New);

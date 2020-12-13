@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // API related
 import axios from 'axios';
 import { apiBaseURL } from '../../../config/config';
@@ -52,7 +52,7 @@ function Index(props) {
             const currentNote = notes.find((note) => note._id === noteId);
             setnote(currentNote);
         }
-    }, [loading, loggedIn]);
+    }, [notes]);
 
     return (
         <Container className={classes.container}>

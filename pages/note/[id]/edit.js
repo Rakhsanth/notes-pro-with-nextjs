@@ -82,7 +82,7 @@ function Edit(props) {
             const currentNote = notes.find((note) => note._id === noteId);
             setnote(currentNote);
         }
-    }, [loading, loggedIn]);
+    }, [notes]);
 
     const initialValues = {
         title: note ? note.title : '',
@@ -260,7 +260,7 @@ export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
 
-    let note;
+    // let note;
     const noteId = context.params.id;
     try {
         const res = await axios.get(`${apiBaseURL}/users/auth/me/something`, {

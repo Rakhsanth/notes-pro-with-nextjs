@@ -68,9 +68,10 @@ function Index(props) {
 // This gets called on every request
 export async function getServerSideProps(context) {
     // Fetch data from external API
-    // console.log(context.req.headers.cookie);
+    // console.log(context);
+    // console.log(context.req);
     console.log(context.req.headers);
-    console.log(context.req.headers.cookie);
+    console.log(context.req.cookies);
     const noteId = context.params.id;
     let note;
     try {
@@ -87,16 +88,12 @@ export async function getServerSideProps(context) {
     } catch (err) {
         console.log(err);
         return {
-            props: {
-                note: { title: 'some', description: 'some desc' },
-            },
+            props: { note },
         };
     }
     // Pass data to the page via props
     return {
-        props: {
-            note: { title: 'some', description: 'some desc' },
-        },
+        props: { note },
     };
 }
 

@@ -294,7 +294,7 @@ export async function getServerSideProps(context) {
         console.log(err.response);
     }
     // Pass data to the page via props
-    return { props: { note: { title: 'some', desciption: 'some desc' } } };
+    return { props: { note } };
 }
 
 const mapStateToProps = (store) => ({

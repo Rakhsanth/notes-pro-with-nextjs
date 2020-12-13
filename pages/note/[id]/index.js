@@ -69,7 +69,7 @@ function Index(props) {
 export async function getServerSideProps(context) {
     // Fetch data from external API
     // console.log(context.req.headers.cookie);
-    console.log(context.req);
+    console.log(context.req.headers);
     const noteId = context.params.id;
     let note;
     try {

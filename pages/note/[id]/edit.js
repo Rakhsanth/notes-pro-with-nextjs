@@ -68,19 +68,21 @@ const useStyles = makeStyles((theme) => ({
 function Edit(props) {
     const classes = useStyles();
 
-    const { note, loading, loggedIn, resetLoading } = props;
+    const { noteId, notes, loading, loggedIn, resetLoading } = props;
 
     const router = useRouter();
 
     const [submitting, setsubmitting] = useState(false);
+    const [note, setnote] = useState(null);
 
-    // useEffect(() => {
-    //     if (loading) {
-    //     }
-    //     if (!loggedIn) {
-    //         router.replace('/login');
-    //     }
-    // }, [loading, loggedIn]);
+    useEffect(() => {
+        if (!loading && !loggedIn) {
+            router.replace('/login');
+        } else {
+            const currentNote = notes.find((note) => note._id === noteId);
+            setnote(currentNote);
+        }
+    }, [loading, loggedIn]);
 
     const initialValues = {
         title: note ? note.title : '',
@@ -261,45 +263,47 @@ export async function getServerSideProps(context) {
     let note;
     const noteId = context.params.id;
     try {
-        const res = await axios.get(`${apiBaseURL}/users/auth/me`, {
+        const res = await axios.get(`${apiBaseURL}/users/auth/me/something`, {
             headers: {
                 'Content-Type': 'application/json',
-                cookie: context.req ? context.req.headers.cookie : undefined,
+                // cookie: context.req ? context.req.headers.cookie : undefined,
             },
             withCredentials: true,
         });
-        const data = res.data.data;
+        const data = res.data.message;
+        console.log(data);
 
-        if (!data._id) {
-            return {
-                redirect: {
-                    destination: '/login',
-                    permanent: false,
-                },
-            };
-        } else {
-            const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    cookie: context.req
-                        ? context.req.headers.cookie
-                        : undefined,
-                },
-                withCredentials: true,
-            });
-            console.log(response.data);
-            note = response.data.data;
-        }
+        // if (!data._id) {
+        //     return {
+        //         redirect: {
+        //             destination: '/login',
+        //             permanent: false,
+        //         },
+        //     };
+        // } else {
+        //     const response = await axios.get(`${apiBaseURL}/notes/${noteId}`, {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             cookie: context.req
+        //                 ? context.req.headers.cookie
+        //                 : undefined,
+        //         },
+        //         withCredentials: true,
+        //     });
+        //     console.log(response.data);
+        //     note = response.data.data;
+        // }
     } catch (err) {
         console.log(err.response);
     }
     // Pass data to the page via props
-    return { props: { note } };
+    return { props: { noteId } };
 }
 
 const mapStateToProps = (store) => ({
     loading: store.auth.loading,
     loggedIn: store.auth.loggedIn,
+    notes: store.notes.notes,
 });
 
 export default connect(mapStateToProps, { resetLoading })(Edit);

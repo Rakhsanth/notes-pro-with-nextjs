@@ -88,7 +88,7 @@ export async function getServerSideProps(context) {
         console.log(err.response);
     }
     // Pass data to the page via props
-    return { props: { note: note } };
+    return { props: { note: { title: 'some', desciption: 'some desc' } } };
 }
 
 export default Index;

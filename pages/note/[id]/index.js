@@ -89,7 +89,7 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 note: { title: 'some', desciption: 'some desc' },
-                response: err,
+                response: JSON.stringify(err.response),
             },
         };
     }
@@ -97,7 +97,6 @@ export async function getServerSideProps(context) {
     return {
         props: {
             note: { title: 'some', desciption: 'some desc' },
-            response: err.response,
         },
     };
 }

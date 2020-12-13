@@ -85,13 +85,19 @@ export async function getServerSideProps(context) {
         console.log(response.data);
         note = response.data.data;
     } catch (err) {
-        console.log(err.response);
+        console.log(err);
+        return {
+            props: {
+                note: { title: 'some', desciption: 'some desc' },
+                response: err.response,
+            },
+        };
     }
     // Pass data to the page via props
     return {
         props: {
             note: { title: 'some', desciption: 'some desc' },
-            response: err.response.data,
+            response: err.response,
         },
     };
 }

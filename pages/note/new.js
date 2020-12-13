@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
 function New(props) {
     const classes = useStyles();
 
-    const { loading, loggedIn, resetLoading, response } = props;
+    const { loading, loggedIn, resetLoading } = props;
 
-    console.log(loggedIn, response);
+    console.log(loggedIn);
 
     const router = useRouter();
 
@@ -259,7 +259,7 @@ export async function getStaticProps(context) {
     } catch (err) {
         console.log(err.response);
         return {
-            props: { loggedIn: false, response: JSON.stringify(err.response) },
+            props: { loggedIn: false },
         };
     }
     return { props: { loggedIn: true } };

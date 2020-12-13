@@ -258,7 +258,7 @@ export async function getStaticProps(context) {
         // Pass data to the page via props
     } catch (err) {
         console.log(err.response);
-        return { props: { loggedIn: false, response: err.response } };
+        return { props: { loggedIn: false, response: err } };
     }
     return { props: { loggedIn: true, response } };
 }

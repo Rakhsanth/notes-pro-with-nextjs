@@ -89,7 +89,7 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 note: { title: 'some', desciption: 'some desc' },
-                response: err.response,
+                response: err,
             },
         };
     }

@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 function Index(props) {
     const classes = useStyles();
 
-    const { note } = props;
-    // console.log(note);
+    const { note, response } = props;
+    console.log(response);
 
     return (
         <Container className={classes.container}>
@@ -88,7 +88,12 @@ export async function getServerSideProps(context) {
         console.log(err.response);
     }
     // Pass data to the page via props
-    return { props: { note: { title: 'some', desciption: 'some desc' } } };
+    return {
+        props: {
+            note: { title: 'some', desciption: 'some desc' },
+            response: err.response.data,
+        },
+    };
 }
 
 export default Index;

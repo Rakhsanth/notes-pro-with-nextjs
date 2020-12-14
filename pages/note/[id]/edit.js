@@ -24,6 +24,8 @@ import * as Yup from 'yup';
 // redux related
 import { connect } from 'react-redux';
 import { resetLoading } from '../../../actions';
+// Other temp utils
+import fetch from 'node-fetch';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -263,14 +265,18 @@ export async function getServerSideProps(context) {
     // let note;
     const noteId = context.params.id;
     try {
-        const res = await axios.get(`${apiBaseURL}/users/auth/me/something`, {
-            headers: {
-                'Content-Type': 'application/json',
-                // cookie: context.req ? context.req.headers.cookie : undefined,
-            },
-            withCredentials: true,
+        const result = await fetch(`${apiBaseURL}/users/auth/me/something`, {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json' },
         });
-        const data = res.data.message;
+        // const res = await axios.get(`${apiBaseURL}/users/auth/me/something`, {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         // cookie: context.req ? context.req.headers.cookie : undefined,
+        //     },
+        //     withCredentials: true,
+        // });
+        const data = result.data.message;
         console.log(data);
 
         // if (!data._id) {

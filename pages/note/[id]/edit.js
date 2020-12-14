@@ -276,7 +276,7 @@ export async function getServerSideProps(context) {
         //     },
         //     withCredentials: true,
         // });
-        const data = result.data.message;
+        const data = result.json();
         console.log(data);
 
         // if (!data._id) {

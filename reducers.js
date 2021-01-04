@@ -121,7 +121,7 @@ const notesReducer = (state = initialNotes, action) => {
         case NOTES_ERROR:
             return {
                 ...state,
-                loading: false,
+                loading: true,
                 totalCount: 0,
                 prev: null,
                 next: null,

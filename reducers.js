@@ -62,7 +62,7 @@ const authReducer = (state = initialAuth, action) => {
         case LOGOUT_USER:
             return {
                 ...state,
-                loading: false,
+                loading: true,
                 loggedIn: false,
                 token: null,
                 user: {},
@@ -112,6 +112,11 @@ const notesReducer = (state = initialNotes, action) => {
                 notes: payload.data,
                 other: null,
                 error: false,
+            };
+        case LOGOUT_USER:
+            return {
+                ...state,
+                loading: true,
             };
         case NOTES_ERROR:
             return {

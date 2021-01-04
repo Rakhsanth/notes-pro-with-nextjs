@@ -77,6 +77,14 @@ const useStyles = makeStyles((theme) => ({
         padding: '0.5rem',
         borderRadius: '50%',
     },
+    dialog: {
+        '& .MuiDialog-paperWidthSm': {
+            width: '3rem',
+            height: '3rem',
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+        },
+    },
 }));
 
 function Index(props) {
@@ -95,7 +103,7 @@ function Index(props) {
     const router = useRouter();
 
     useEffect(() => {
-        if (!loading && !isLoggedIn) {
+        if (!isLoggedIn) {
             router.replace('/login');
         }
     }, [loading, isLoggedIn]);
@@ -117,7 +125,15 @@ function Index(props) {
         <Fragment>
             <Container className={classes.container}>
                 <Grid container spacing={3}>
-                    {notes.totalCount !== 0 ? (
+                    {loadingNotes ? (
+                        <Dialog
+                            className={classes.dialog}
+                            open={loadingNotes}
+                            aria-labelledby="simple-dialog-title"
+                        >
+                            <CircularProgress />
+                        </Dialog>
+                    ) : notes.totalCount !== 0 ? (
                         notes.notes.map((note) => {
                             // console.log(note._id);
                             return (

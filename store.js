@@ -22,7 +22,7 @@ const persistConfig = {
     storage,
     // stateReconciler: hardSet,
     autoMergeLevel2,
-    // whitelist: ['auth'],
+    whitelist: ['auth'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

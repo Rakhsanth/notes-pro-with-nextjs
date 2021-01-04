@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const initialValues = {
     userName: '',
     password: '',
+    password2: '',
 };
 const validationSchema = Yup.object({
     userName: Yup.string().required('Username is mandatory'),
@@ -73,6 +74,13 @@ const validationSchema = Yup.object({
         'passwordValidator',
         'Password must have upper, lowercase, number, symbols and atleast 8 characters',
         (value) => validatePassword(value)
+    ),
+    password2: Yup.string().test(
+        'validateConfirmPassword',
+        'Confirm password must be same as password',
+        function (value) {
+            return value === this.parent.password;
+        }
     ),
 });
 
@@ -183,6 +191,41 @@ function Register(props) {
                                                         )
                                                             ? formik.errors
                                                                   .password
+                                                            : null
+                                                    }
+                                                />
+                                            );
+                                        }}
+                                    </Field>
+                                    <Field name="password2">
+                                        {({ field, form }) => {
+                                            return (
+                                                <TextField
+                                                    className={
+                                                        classes.textFieldRoot
+                                                    }
+                                                    {...field}
+                                                    id="password2"
+                                                    label="Confirm Password"
+                                                    type="password"
+                                                    variant="outlined"
+                                                    error={
+                                                        formik.touched
+                                                            .password2 &&
+                                                        Boolean(
+                                                            formik.errors
+                                                                .password2
+                                                        )
+                                                    }
+                                                    helperText={
+                                                        formik.touched
+                                                            .password2 &&
+                                                        Boolean(
+                                                            formik.errors
+                                                                .password2
+                                                        )
+                                                            ? formik.errors
+                                                                  .password2
                                                             : null
                                                     }
                                                 />

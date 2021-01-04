@@ -20,7 +20,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 // Redux and actions
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions';
+import { loginUser, logout } from '../../actions';
 // custom css file
 // import styles from './login.module.css';
 // Utils
@@ -91,7 +91,7 @@ function Login(props) {
 
     const router = useRouter();
 
-    const { loginUser, loading, isLoggedIn } = props;
+    const { loginUser, logout, loading, isLoggedIn } = props;
     // let isLoggedIn = false;
 
     const [isSubmitting, setisSubmitting] = useState(false);
@@ -100,6 +100,8 @@ function Login(props) {
     useEffect(() => {
         if (!loading && isLoggedIn) {
             router.replace('/');
+        } else {
+            logout();
         }
     }, [loading, isLoggedIn]);
 
@@ -239,4 +241,4 @@ const mapStateToProps = (store) => ({
     isLoggedIn: store.auth.loggedIn,
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser, logout })(Login);

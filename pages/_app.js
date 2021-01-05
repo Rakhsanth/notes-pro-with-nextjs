@@ -7,6 +7,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
 
+// Global css
+import '../styles/globals.css';
+
 // Redux store and actions
 import { Provider } from 'react-redux';
 import { useStore } from '../store';
@@ -16,7 +19,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 // Components
 import Layout from '../components/Layout';
 // Actions
-import { loadUser } from '../actions';
+import { loadUser, resetLoading } from '../actions';
 
 export default function MyApp(props) {
     const { Component, pageProps } = props;
@@ -32,6 +35,7 @@ export default function MyApp(props) {
         if (jssStyles) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
+        store.dispatch(resetLoading('notes'));
         store.dispatch(loadUser());
     }, []);
 

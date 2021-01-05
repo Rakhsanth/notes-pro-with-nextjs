@@ -10,7 +10,30 @@ import {
     CREATE_NOTE,
     DELETE_NOTE,
     NOTES_ERROR,
+    SET_ALERT,
+    REMOVE_ALERT,
 } from './actionTypes';
+
+// Alert reducer
+const initialAlertState = {
+    alerts: [],
+};
+const alertReducer = (state = initialAlertState, action) => {
+    const { type, payload } = action;
+    switch (type) {
+        case SET_ALERT:
+            return { ...state, alerts: [...state.alerts, payload] };
+        case REMOVE_ALERT:
+            return {
+                ...state,
+                alerts: state.alerts.filter(
+                    ({ color, message }) => message !== payload.message
+                ),
+            };
+        default:
+            return state;
+    }
+};
 
 // Auth reducer
 const initialAuth = {
@@ -36,21 +59,13 @@ const authReducer = (state = initialAuth, action) => {
                 ...state,
                 loading: false,
                 loggedIn: true,
-                token: null,
                 user: payload,
                 other: null,
                 error: false,
             };
         case LOGIN_USER:
-            return {
-                ...state,
-                loading: false,
-                loggedIn: true,
-                token: payload.token,
-                other: null,
-                error: false,
-            };
         case REGISTER_USER:
+            localStorage.setItem('token', payload.token);
             return {
                 ...state,
                 loading: false,
@@ -126,7 +141,7 @@ const notesReducer = (state = initialNotes, action) => {
         case NOTES_ERROR:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 totalCount: 0,
                 prev: null,
                 next: null,
@@ -142,4 +157,5 @@ const notesReducer = (state = initialNotes, action) => {
 export default combineReducers({
     auth: authReducer,
     notes: notesReducer,
+    alert: alertReducer,
 });

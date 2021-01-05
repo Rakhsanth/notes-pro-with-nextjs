@@ -11,16 +11,47 @@ import {
     CREATE_NOTE,
     DELETE_NOTE,
     NOTES_ERROR,
+    SET_ALERT,
+    REMOVE_ALERT,
 } from './actionTypes';
 
-const getAxiosConfig = (contentType, withCredentials) => {
-    let axiosConfig = {
-        headers: {
-            'Content-Type': contentType,
-        },
-        withCredentials: withCredentials,
-    };
+const getAxiosConfig = (contentType, needAuth, withCredentials) => {
+    let axiosConfig;
+
+    if (needAuth) {
+        let token;
+        if (localStorage.token) {
+            token = localStorage.getItem('token');
+        }
+        axiosConfig = {
+            headers: {
+                'Content-Type': contentType,
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: withCredentials,
+        };
+    } else {
+        axiosConfig = {
+            headers: {
+                'Content-Type': contentType,
+            },
+            withCredentials: withCredentials,
+        };
+    }
+
     return axiosConfig;
+};
+
+// action to show alerts or info
+export const setAlert = (color, message, timeout) => {
+    // not an async function as it is not related to API calls and just static timeout
+    return function (dispatch) {
+        dispatch({ type: SET_ALERT, payload: { color, message } });
+        setTimeout(
+            () => dispatch({ type: REMOVE_ALERT, payload: { color, message } }),
+            timeout * 1000
+        );
+    };
 };
 
 // Simple action creator for resetting loading state for re-renderings
@@ -33,6 +64,7 @@ export const resetLoading = (state) => {
 // Load current user data
 export const loadUser = () => {
     return async function (dispatch) {
+        dispatch(resetLoading('notes'));
         try {
             const response = await axios.get(
                 `${apiBaseURL}/users/auth/me`,
@@ -41,7 +73,15 @@ export const loadUser = () => {
             dispatch({ type: LOAD_USER, payload: response.data.data });
         } catch (err) {
             // console.log(err.response);
-            dispatch({ type: AUTH_ERROR, payload: err.response });
+            if (err.response !== undefined) {
+                console.log(err.response.status);
+                dispatch(setAlert('#3F51B5', 'User not logged in', 3));
+                dispatch({ type: AUTH_ERROR, payload: err.response });
+            } else {
+                dispatch(
+                    setAlert('red', 'Server down, please try again later', 3)
+                );
+            }
         }
     };
 };
@@ -52,13 +92,22 @@ export const registerUser = (body) => {
             const response = await axios.post(
                 `${apiBaseURL}/users/register`,
                 body,
-                getAxiosConfig('application/json', true)
+                getAxiosConfig('application/json')
             );
             dispatch({ type: REGISTER_USER, payload: response.data });
             dispatch(loadUser());
+            dispatch(setAlert('green', 'Logged in successfully', 3));
         } catch (err) {
             // console.log(err.response);
-            dispatch({ type: AUTH_ERROR, payload: err.response });
+            if (err.response !== undefined) {
+                console.log(err.response.status);
+                dispatch(setAlert('red', 'User not logged in, try again !', 3));
+                dispatch({ type: AUTH_ERROR, payload: err.response });
+            } else {
+                dispatch(
+                    setAlert('red', 'Server down, please try again later', 3)
+                );
+            }
         }
     };
 };
@@ -69,30 +118,33 @@ export const loginUser = (body) => {
             const response = await axios.post(
                 `${apiBaseURL}/users/login`,
                 body,
-                getAxiosConfig('application/json', true)
+                getAxiosConfig('application/json')
             );
             dispatch({ type: LOGIN_USER, payload: response.data });
             dispatch(loadUser());
+            dispatch(setAlert('green', 'Logged in successfully', 3));
         } catch (err) {
             // console.log(err.response);
-            dispatch({ type: AUTH_ERROR, payload: err.response });
+            if (err.response !== undefined) {
+                console.log(err.response.status);
+                dispatch(
+                    setAlert('red', 'User not logged in, check credentials', 3)
+                );
+                dispatch({ type: AUTH_ERROR, payload: err.response });
+            } else {
+                dispatch(
+                    setAlert('red', 'Server down, please try again later', 3)
+                );
+            }
         }
     };
 };
 // Logout action
 export const logout = () => {
-    return async function (dispatch) {
-        try {
-            const getURL = `${apiBaseURL}/users/auth/logout`;
-            const response = await axios.get(
-                getURL,
-                getAxiosConfig('aaplication/json', true)
-            );
-            dispatch({ type: LOGOUT_USER, payload: response.data });
-        } catch (err) {
-            dispatch({ type: AUTH_ERROR, payload: err.response.data });
-        }
-    };
+    if (localStorage.token) {
+        localStorage.removeItem('token');
+    }
+    return { type: LOGOUT_USER };
 };
 // Get notes of a user
 export const getNotes = (pageNum, limit) => {

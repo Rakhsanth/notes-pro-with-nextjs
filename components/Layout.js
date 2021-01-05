@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
+import AlertWrapper from './utils/AlertWrapper';
 
 function Layout({ children }) {
     return (
@@ -13,6 +14,7 @@ function Layout({ children }) {
                 />
             </Head>
             <Navbar />
+            <AlertWrapper />
             {children}
         </Fragment>
     );

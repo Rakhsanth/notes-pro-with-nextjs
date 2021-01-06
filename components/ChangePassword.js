@@ -35,13 +35,15 @@ function ChangePassword(props) {
             'Password must have upper, lowercase, number, symbols and atleast 8 characters',
             (value) => validatePassword(value)
         ),
-        newPassword2: Yup.string().test(
-            'compare passwords',
-            'The new passwords does not match',
-            function (value) {
-                return value === this.parent.newPassword1;
-            }
-        ),
+        newPassword2: Yup.string()
+            .test(
+                'compare passwords',
+                'The new passwords does not match',
+                function (value) {
+                    return value === this.parent.newPassword1;
+                }
+            )
+            .required('Confirm password cannot be blank'),
     });
     const onSubmit = (values) => {
         if (values.currentPassword === values.newPassword1) {

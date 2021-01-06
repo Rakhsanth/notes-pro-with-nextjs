@@ -64,6 +64,7 @@ export const resetLoading = (state) => {
 // Load current user data
 export const loadUser = () => {
     return async function (dispatch) {
+        // dispatch(resetLoading('auth'));
         dispatch(resetLoading('notes'));
         try {
             const response = await axios.get(

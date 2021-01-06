@@ -84,7 +84,7 @@ function Edit(props) {
             const currentNote = notes.find((note) => note._id === noteId);
             setnote(currentNote);
         }
-    }, [notes]);
+    }, [notes, loading]);
 
     const initialValues = {
         title: note ? note.title : '',

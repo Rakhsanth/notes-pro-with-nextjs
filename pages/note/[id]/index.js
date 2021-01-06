@@ -1,3 +1,6 @@
+// Next related
+import { useRouter } from 'next/router';
+// React stuff
 import React, { useState, useEffect } from 'react';
 // API related
 import axios from 'axios';
@@ -45,6 +48,8 @@ function Index(props) {
 
     const [note, setnote] = useState(null);
 
+    const router = useRouter();
+
     useEffect(() => {
         if (!loading && !loggedIn) {
             router.replace('/login');
@@ -52,7 +57,7 @@ function Index(props) {
             const currentNote = notes.find((note) => note._id === noteId);
             setnote(currentNote);
         }
-    }, [notes]);
+    }, [notes, loading]);
 
     return (
         <Container className={classes.container}>

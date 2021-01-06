@@ -29,7 +29,6 @@ import {
 import { connect } from 'react-redux';
 import { logout } from '../actions';
 import ChangePassword from './ChangePassword';
-import { changePassword } from '../apis/user';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -161,31 +160,6 @@ function Navbar(props) {
         setformValue(values);
         // console.log(values);
     };
-    const handleChangePassword = async () => {
-        if (formValue.oldPassword !== formValue.newPassword) {
-            // console.log(formValue);
-            setsubmitting(true);
-            const data = await changePassword(formValue);
-            if (data.success) {
-                seterrorMessage('SuccessFully Changed');
-                setshowError(true);
-                setTimeout(() => {
-                    setshowError(false);
-                    setsubmitting(false);
-                    setopenDialog(false);
-                }, 2000);
-            } else {
-                const message = data.data;
-                seterrorMessage(message);
-                setshowError(true);
-                // console.log(data);
-                setTimeout(() => {
-                    setshowError(false);
-                    setsubmitting(false);
-                }, 2000);
-            }
-        }
-    };
 
     const handleLogout = () => {
         logout();
@@ -246,6 +220,10 @@ function Navbar(props) {
         </Menu>
     );
 
+    const handleCloseChangePassword = () => {
+        setopenDialog(false);
+    };
+
     return (
         <div className={classes.grow}>
             <AppBar position="static">
@@ -290,28 +268,11 @@ function Navbar(props) {
             </AppBar>
             {isLoggedIn ? renderMobileMenu : null}
             {isLoggedIn ? renderMenu : null}
-            <Dialog
-                className={classes.dialog}
-                open={openDialog}
-                onClose={() => setopenDialog(false)}
-            >
-                <DialogTitle>Change password</DialogTitle>
-                <DialogContent dividers>
-                    <ChangePassword handleSetFormValues={handleSetFormValues} />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleChangePassword} color="primary">
-                        Change
-                    </Button>
-                    <Button
-                        onClick={() => setopenDialog(false)}
-                        color="secondary"
-                        autoFocus
-                    >
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
+
+            <ChangePassword
+                openDialog={openDialog}
+                handleCloseChangePassword={handleCloseChangePassword}
+            />
             <Dialog
                 className={classes.dialogProgress}
                 open={submitting}

@@ -77,7 +77,7 @@ function New(props) {
     const [submitting, setsubmitting] = useState(false);
 
     useEffect(() => {
-        if (!loggedIn) {
+        if (!loading && !loggedIn) {
             router.replace('/login');
         }
     }, [loading, loggedIn]);

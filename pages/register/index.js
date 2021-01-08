@@ -101,9 +101,6 @@ function Register(props) {
         setisSubmitting(true);
         registerUser(values);
         setisSubmitting(false);
-        // if (isLoggedIn) {
-        // }
-        // router.replace('/');
     };
 
     return (

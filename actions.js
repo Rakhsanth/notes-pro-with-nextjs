@@ -102,7 +102,13 @@ export const registerUser = (body) => {
             // console.log(err.response);
             if (err.response !== undefined) {
                 console.log(err.response.status);
-                dispatch(setAlert('red', 'User not logged in, try again !', 3));
+                dispatch(
+                    setAlert(
+                        'red',
+                        'Username already exists, try with a different username',
+                        3
+                    )
+                );
                 dispatch({ type: AUTH_ERROR, payload: err.response });
             } else {
                 dispatch(

@@ -31,12 +31,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '1rem',
     },
     textFieldRoot: {
+        marginBottom: '1rem',
         '& .MuiOutlinedInput-input': {
             padding: '1.1rem 1rem',
-        },
-        '&:nth-last-of-type(1)': {
-            marginTop: '1rem',
-            marginBottom: '1rem',
         },
     },
     btn: {
@@ -104,7 +101,9 @@ function Register(props) {
         setisSubmitting(true);
         registerUser(values);
         setisSubmitting(false);
-        router.replace('/');
+        // if (isLoggedIn) {
+        // }
+        // router.replace('/');
     };
 
     return (
